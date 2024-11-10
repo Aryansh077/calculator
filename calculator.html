@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Calculator</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f4f8;
+        }
+        .calculator {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            width: 300px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 1.5rem;
+        }
+        .input-group {
+            margin-bottom: 1rem;
+        }
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #555;
+        }
+        input[type="number"] {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        .button-group {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        button {
+            padding: 0.5rem;
+            border: none;
+            border-radius: 4px;
+            background-color: #4a90e2;
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #3a7bc8;
+        }
+        #result {
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333;
+            background-color: #f0f4f8;
+            padding: 1rem;
+            border-radius: 4px;
+        }
+        .reset-button {
+            background-color: #e04a4a;
+        }
+        .reset-button:hover {
+            background-color: #c83b3b;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <h1>Simple Calculator</h1>
+        <div class="input-group">
+            <label for="num1">Number 1:</label>
+            <input type="number" id="num1" placeholder="Enter first number">
+        </div>
+        <div class="input-group">
+            <label for="num2">Number 2:</label>
+            <input type="number" id="num2" placeholder="Enter second number">
+        </div>
+        <div class="button-group">
+            <button onclick="performOperation('add')">Add</button>
+            <button onclick="performOperation('sub')">Subtract</button>
+            <button onclick="performOperation('mul')">Multiply</button>
+            <button onclick="performOperation('div')">Divide</button>
+        </div>
+        <button class="reset-button" onclick="resetCalculator()">Reset</button>
+        <div id="result">Result: </div>
+    </div>
+
+    <script>
+        function performOperation(operation) {
+            // Get values from input fields
+            const num1 = parseFloat(document.getElementById('num1').value);
+            const num2 = parseFloat(document.getElementById('num2').value);
+            let result;
+
+            // Check if both inputs are valid numbers
+            if (isNaN(num1) || isNaN(num2)) {
+                result = "Please enter valid numbers!";
+                document.getElementById('result').style.color = 'red';
+            } else {
+                // Perform the operation based on the button clicked
+                switch (operation) {
+                    case 'add':
+                        result = num1 + num2;
+                        break;
+                    case 'sub':
+                        result = num1 - num2;
+                        break;
+                    case 'mul':
+                        result = num1 * num2;
+                        break;
+                    case 'div':
+                        // Check for division by zero
+                        if (num2 === 0) {
+                            result = "Cannot divide by zero!";
+                            document.getElementById('result').style.color = 'red';
+                        } else {
+                            result = num1 / num2;
+                            document.getElementById('result').style.color = '#333';
+                        }
+                        break;
+                    default:
+                        result = "Invalid operation!";
+                        document.getElementById('result').style.color = 'red';
+                }
+                document.getElementById('result').style.color = '#333'; // Reset color for valid result
+            }
+
+            // Display the result
+            document.getElementById('result').textContent = "Result: " + result;
+        }
+
+        function resetCalculator() {
+            document.getElementById('num1').value = '';
+            document.getElementById('num2').value = '';
+            document.getElementById('result').textContent = "Result: ";
+            document.getElementById('result').style.color = '#333';
+        }
+    </script>
+</body>
+</html>
